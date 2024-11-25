@@ -14,8 +14,6 @@ The repository for this project is **veriwell-front**.
 - **AI-Powered Smart Contract Descriptions**: Automatically generate explanations for smart contracts using AI.
 - **Verification Culture Formation**: Issue NFTs to individuals who successfully verify contracts, fostering a culture of accountability and recognition.
 
-
-
 ## Supported Languages
 
 - [x] Solidity
@@ -37,6 +35,21 @@ The repository for this project is **veriwell-front**.
 - Sui
   - [ ] Mainnet
   - [ ] Testnet
+
+## Environment Variables
+
+The following environment variables must be configured to run the project:
+
+- `NEXT_PUBLIC_WALLET_PROJECT_ID`: Wallet project ID for connecting to supported chains. (rainbowKit)
+- `NEXT_PUBLIC_STARKNET_MAINNET_URL`: URL for the StarkNet Mainnet RPC.
+- `NEXT_PUBLIC_STARKNET_SEPOLIA_URL`: URL for the StarkNet Sepolia RPC.
+- `NEXT_PUBLIC_ETHEREUM_MAINNET_URL`: URL for the Ethereum Mainnet RPC.
+- `NEXT_PUBLIC_ETHEREUM_SEPOLIA_URL`: URL for the Ethereum Sepolia RPC.
+- `NEXT_PUBLIC_ARBITRUM_ONE_URL`: URL for the Arbitrum One RPC.
+- `NEXT_PUBLIC_ARBITRUM_SEPOLIA_URL`: URL for the Arbitrum Sepolia RPC.
+- `GEMINI_API_KEY`: API key for Gemini services.
+
+Ensure all variables are set in your environment before running the project.
 
 ## Getting Started
 
