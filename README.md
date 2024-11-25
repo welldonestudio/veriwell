@@ -40,7 +40,7 @@ The repository for this project is **veriwell-front**.
 
 The following environment variables must be configured to run the project:
 
-- `NEXT_PUBLIC_WALLET_PROJECT_ID`: Wallet project ID for connecting to supported chains. (rainbowKit)
+- `NEXT_PUBLIC_WALLET_PROJECT_ID`: Wallet project ID for connecting to supported chains. [WalletConnect Cloud](https://cloud.reown.com/)
 - `NEXT_PUBLIC_STARKNET_MAINNET_URL`: URL for the StarkNet Mainnet RPC.
 - `NEXT_PUBLIC_STARKNET_SEPOLIA_URL`: URL for the StarkNet Sepolia RPC.
 - `NEXT_PUBLIC_ETHEREUM_MAINNET_URL`: URL for the Ethereum Mainnet RPC.
