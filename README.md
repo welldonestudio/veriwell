@@ -1,31 +1,128 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Veriwell Frontend Project
+
+## Overview
+
+Veriwell is a Smart Contract Verification Platform designed to ensure security, transparency, and reliability in blockchain applications. This repository contains the frontend code for Veriwell, providing an intuitive and seamless interface for users to interact with the platform.
+
+## Repository Name
+
+The repository for this project is **veriwell-front**.
+
+## Features
+
+- **Smart Contract Upload and Verification**: Users can upload their smart contracts to verify their functionality and security.
+- **AI-Powered Smart Contract Descriptions**: Automatically generate explanations for smart contracts using AI.
+- **Verification Culture Formation**: Issue NFTs to individuals who successfully verify contracts, fostering a culture of accountability and recognition.
+
+
+
+## Supported Languages
+
+- [x] Solidity
+- [x] Stylus
+- [x] Cairo
+- [ ] Sui Move
+
+## Supported Chains/Networks
+
+- Ethereum
+  - [x] Mainnet
+  - [x] Sepolia
+- StarkNet
+  - [x] Mainnet
+  - [x] Sepolia
+- Arbitrum
+  - [x] One
+  - [x] Sepolia
+- Sui
+  - [ ] Mainnet
+  - [ ] Testnet
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+Ensure you have the following installed on your machine:
+
+- [Node.js](https://nodejs.org/) (v16.x or higher)
+- [pnpm](https://pnpm.io/) (package manager)
+
+### Installation
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/your-username/veriwell-front.git
+   cd veriwell-front
+   ```
+2. Install dependencies:
+   ```bash
+   pnpm install
+   ```
+
+### Running the Development Server
+
+Start the development server to preview changes:
 
 ```bash
-pnpm dev
+pnpm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The app will be available at `http://localhost:3000`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Building for Production
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+To build the project for production:
 
-## Learn More
+```bash
+pnpm run build
+```
 
-To learn more about Next.js, take a look at the following resources:
+The build output will be located in the `dist/` directory.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Running in Production Mode
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+After building the project, start the production server:
 
-## Deploy on Vercel
+```bash
+pnpm run start
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Project Structure
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
-# zugzag
+The Veriwell frontend project is designed and implemented using the FSD (Feature-Sliced Design) architecture. This approach ensures a modular and scalable codebase by structuring the project around features, layers, and slices.
+
+```
+veriwell-front/
+├── app/              # Application-level configurations and setups
+├── src/
+│   ├── _pages/       # Page components structured by routes
+│   ├── components/   # shadcn-ui components
+│   ├── features/     # Feature-specific components and logic
+│   ├── shared/       # Shared utilities, styles, and components
+│   ├── entities/     # Domain-specific entities and data structures
+│   └── widgets/      # Components used in pages
+├── public/           # Public assets
+├── package.json      # Project dependencies and scripts
+└── README.md         # Project documentation
+```
+
+## Contributing
+
+We welcome contributions to improve Veriwell's frontend! Please follow these steps:
+
+1. Fork the repository.
+2. Create a new branch for your feature or bug fix.
+3. Commit your changes and push the branch.
+4. Open a pull request.
+
+## License
+
+This project is licensed under the [MIT License](./LICENSE).
+
+## Contact
+
+For questions or support, please contact:
+
+- **Email**: [hyeongseob.jeong@dsrvlabs.com](mailto:hyeongseob.jeong@dsrvlabs.com)
+- **Website**: [https://veriwell.vercel.app](https://veriwell.vercel.app)
+
