@@ -1,4 +1,4 @@
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import {
   Button,
   Input,
@@ -9,9 +9,9 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/src/shared/ui';
-import { useStepper } from '@/src/widgets/Stpper';
-import { Dispatch, FC, SetStateAction, useEffect, useMemo, useRef, useState } from 'react';
+} from "@/src/shared/ui";
+import { useStepper } from "@/src/widgets/Stpper";
+import { Dispatch, FC, SetStateAction, useEffect, useMemo, useRef, useState } from "react";
 import {
   ContractInfo,
   isArbitrumContractInfo,
@@ -19,12 +19,12 @@ import {
   isOsType,
   isStarknetContractInfo,
   SupportedChain,
-} from './page';
-import solidityVersion from '@/src/shared/const/solidity-version.json';
-import NFTModal from './nft-modal';
-import { Checkbox } from '@/components/ui/checkbox';
-import { isEthAddress, isStarknetAddressOrHash } from '@/src/shared/lib/network';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+} from "./page";
+import solidityVersion from "@/src/shared/const/solidity-version.json";
+import NFTModal from "./nft-modal";
+import { Checkbox } from "@/components/ui/checkbox";
+import { isEthAddress, isStarknetAddressOrHash } from "@/src/shared/lib/network";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 type ChainInfo = {
   chainName: string;
@@ -39,51 +39,53 @@ type ErrorMessage = {
 
 const chainInfos: ChainInfo[] = [
   {
-    chainName: 'ethereum',
-    networks: ['mainnet', 'sepolia'],
-    compilers: ['solidity'],
+    chainName: "ethereum",
+    networks: ["mainnet", "sepolia"],
+    compilers: ["solidity"],
   },
   {
-    chainName: 'arbitrum',
-    networks: ['one', 'sepolia'],
-    compilers: ['solidity', 'stylus'],
+    chainName: "arbitrum",
+    networks: ["one", "sepolia"],
+    compilers: ["solidity", "stylus"],
   },
   {
-    chainName: 'starknet',
-    networks: ['mainnet', 'sepolia'],
-    compilers: ['cairo'],
+    chainName: "starknet",
+    networks: ["mainnet", "sepolia"],
+    compilers: ["cairo"],
   },
 ];
 
 const solidityCompilerVersions = solidityVersion.builds
   .reverse()
-  .filter((build) => !build.longVersion.includes('nightly'))
+  .filter((build) => !build.longVersion.includes("nightly"))
   .map((build) => `v${build.version}+${build.build}`);
-const stylusCompilerVersions = ['0.5.1', '0.5.2', '0.5.3', '0.5.4', '0.5.5'];
+const stylusCompilerVersions = ["0.5.1", "0.5.2", "0.5.3", "0.5.4", "0.5.5"];
 const cairoCompilerVersions = [
-  '2.3.0',
-  '2.3.1',
-  '2.4.0',
-  '2.4.1',
-  '2.4.2',
-  '2.4.3',
-  '2.4.4',
-  '2.5.0',
-  '2.5.1',
-  '2.5.2',
-  '2.5.3',
-  '2.5.4',
-  '2.6.0',
-  '2.6.1',
-  '2.6.2',
-  '2.6.3',
-  '2.6.4',
-  '2.6.5',
-  '2.7.0',
-  '2.7.1',
-  '2.8.0',
-  '2.8.1',
-  '2.8.2',
+  "2.3.0",
+  "2.3.1",
+  "2.4.0",
+  "2.4.1",
+  "2.4.2",
+  "2.4.3",
+  "2.4.4",
+  "2.5.0",
+  "2.5.1",
+  "2.5.2",
+  "2.5.3",
+  "2.5.4",
+  "2.6.0",
+  "2.6.1",
+  "2.6.2",
+  "2.6.3",
+  "2.6.4",
+  "2.6.5",
+  "2.7.0",
+  "2.7.1",
+  "2.8.0",
+  "2.8.1",
+  "2.8.2",
+  "2.8.3",
+  "2.8.4",
 ];
 
 interface ContractInfoProps {
@@ -95,7 +97,7 @@ export const ContractInfoForm: FC<ContractInfoProps> = ({ contractInfo, setContr
   const inputRef = useRef<HTMLInputElement>(null);
   const { nextStep } = useStepper();
   const [selectedChain, setSelectedChain] = useState<ChainInfo>(
-    chainInfos.filter((chainInfo) => contractInfo.chain === chainInfo.chainName)[0],
+    chainInfos.filter((chainInfo) => contractInfo.chain === chainInfo.chainName)[0]
   );
   const [errorMessage, setErrorMessage] = useState<ErrorMessage>({
     contractAddress: null,
@@ -103,11 +105,11 @@ export const ContractInfoForm: FC<ContractInfoProps> = ({ contractInfo, setContr
   });
 
   const compilerVersions = useMemo(() => {
-    if (contractInfo.compilerType === 'solidity') {
+    if (contractInfo.compilerType === "solidity") {
       return solidityCompilerVersions;
-    } else if (contractInfo.compilerType === 'stylus') {
+    } else if (contractInfo.compilerType === "stylus") {
       return stylusCompilerVersions;
-    } else if (contractInfo.compilerType === 'cairo') {
+    } else if (contractInfo.compilerType === "cairo") {
       return cairoCompilerVersions;
     }
     return [];
@@ -128,7 +130,7 @@ export const ContractInfoForm: FC<ContractInfoProps> = ({ contractInfo, setContr
           type="text"
           id="contract-address"
           className={`block w-full mt-1 rounded-md shadow-sm sm:text-sm ${
-            errorMessage.contractAddress ? 'ring-red-500' : ''
+            errorMessage.contractAddress ? "ring-red-500" : ""
           }`}
           placeholder="0x"
           value={contractInfo.contractAddress}
@@ -143,23 +145,23 @@ export const ContractInfoForm: FC<ContractInfoProps> = ({ contractInfo, setContr
         {errorMessage.contractAddress && (
           <p
             className={`absolute top-[78px] text-red-500 text-xs ${
-              errorMessage.contractAddress ? 'animate-shake' : ''
+              errorMessage.contractAddress ? "animate-shake" : ""
             }`}
           >
             {errorMessage.contractAddress}
           </p>
         )}
       </div>
-      {contractInfo.chain === 'starknet' && (
+      {contractInfo.chain === "starknet" && (
         <div className="relative grid grid-cols-1 gap-2">
           <Label htmlFor="contract-address" className="block text-sm font-medium ">
-            Please enter the Declare Transaction Hash
+            Please enter the DECLARE Transaction Hash
           </Label>
           <Input
             type="text"
             id="contract-address"
             className={`block w-full mt-1 rounded-md shadow-sm sm:text-sm ${
-              errorMessage.declareTxHash ? 'ring-red-500' : ''
+              errorMessage.declareTxHash ? "ring-red-500" : ""
             }`}
             placeholder="0x"
             value={contractInfo.declareTxHash}
@@ -174,7 +176,7 @@ export const ContractInfoForm: FC<ContractInfoProps> = ({ contractInfo, setContr
           {errorMessage.declareTxHash && (
             <p
               className={`absolute top-[78px] text-red-500 text-xs ${
-                errorMessage.declareTxHash ? 'animate-shake' : ''
+                errorMessage.declareTxHash ? "animate-shake" : ""
               }`}
             >
               {errorMessage.declareTxHash}
@@ -195,31 +197,31 @@ export const ContractInfoForm: FC<ContractInfoProps> = ({ contractInfo, setContr
 
               let chainDefault = {};
               switch (item) {
-                case 'arbitrum': {
+                case "arbitrum": {
                   chainDefault = {
                     chain: item,
                     network: targetChainInfo.networks[0],
-                    compilerType: 'stylus',
-                    compilerVersion: '0.5.5',
-                    os: 'x86',
+                    compilerType: "stylus",
+                    compilerVersion: "0.5.5",
+                    os: "x86",
                   };
                   break;
                 }
-                case 'ethereum': {
+                case "ethereum": {
                   chainDefault = {
                     chain: item,
                     network: targetChainInfo.networks[0],
-                    compilerType: 'solidity',
-                    compilerVersion: 'v0.8.26+commit.8a97fa7a',
+                    compilerType: "solidity",
+                    compilerVersion: "v0.8.26+commit.8a97fa7a",
                   };
                   break;
                 }
-                case 'starknet': {
+                case "starknet": {
                   chainDefault = {
                     chain: item,
                     network: targetChainInfo.networks[0],
-                    compilerType: 'cairo',
-                    scarbVersion: '2.8.2',
+                    compilerType: "cairo",
+                    scarbVersion: "2.8.2",
                   };
                   break;
                 }
@@ -230,17 +232,22 @@ export const ContractInfoForm: FC<ContractInfoProps> = ({ contractInfo, setContr
                   ({
                     ...prevValue,
                     ...chainDefault,
-                  } as ContractInfo),
+                  } as ContractInfo)
               );
             }}
           >
-            <SelectTrigger className="w-full mt-1">
+            <SelectTrigger className="capitalize w-full mt-1">
               <SelectValue placeholder="Select a Protocol" />
             </SelectTrigger>
             <SelectContent>
               <SelectGroup>
                 {chainInfos.map((item) => (
-                  <SelectItem key={item.chainName} value={item.chainName.toLowerCase()}>
+                  <SelectItem
+                    className="capitalize"
+                    key={item.chainName}
+                    value={item.chainName.toLowerCase()}
+                    disabled={item.chainName !== "starknet"}
+                  >
                     {item.chainName}
                   </SelectItem>
                 ))}
@@ -256,23 +263,23 @@ export const ContractInfoForm: FC<ContractInfoProps> = ({ contractInfo, setContr
           <Select
             value={contractInfo.network}
             onValueChange={(network) => {
-              if (network === '') return;
+              if (network === "") return;
               setContractInfo(
                 (prevValue) =>
                   ({
                     ...prevValue,
                     network: network,
-                  } as ContractInfo),
+                  } as ContractInfo)
               );
             }}
           >
-            <SelectTrigger className="w-full mt-1">
+            <SelectTrigger className="capitalize w-full mt-1">
               <SelectValue placeholder="Select a Protocol" />
             </SelectTrigger>
             <SelectContent>
               <SelectGroup>
                 {selectedChain.networks.map((item) => (
-                  <SelectItem key={item} value={item.toLowerCase()}>
+                  <SelectItem key={item} className="capitalize" value={item.toLowerCase()}>
                     {item}
                   </SelectItem>
                 ))}
@@ -288,23 +295,23 @@ export const ContractInfoForm: FC<ContractInfoProps> = ({ contractInfo, setContr
           <Select
             value={contractInfo.compilerType}
             onValueChange={(compiler) => {
-              if (compiler === '') return;
+              if (compiler === "") return;
               setContractInfo(
                 (prevValue) =>
                   ({
                     ...prevValue,
                     compilerType: compiler,
-                  } as ContractInfo),
+                  } as ContractInfo)
               );
             }}
           >
-            <SelectTrigger className="w-full mt-1">
+            <SelectTrigger className="capitalize w-full mt-1">
               <SelectValue placeholder="Select a Compiler Type" />
             </SelectTrigger>
             <SelectContent>
               <SelectGroup>
                 {selectedChain.compilers.map((item) => (
-                  <SelectItem key={item} value={item.toLowerCase()}>
+                  <SelectItem key={item} className="capitalize" value={item.toLowerCase()}>
                     {item}
                   </SelectItem>
                 ))}
@@ -318,11 +325,11 @@ export const ContractInfoForm: FC<ContractInfoProps> = ({ contractInfo, setContr
             Please Select Compiler Version
           </Label>
           <Select
-            value={contractInfo.chain === 'starknet' ? contractInfo.scarbVersion : contractInfo.compilerVersion}
+            value={contractInfo.chain === "starknet" ? contractInfo.scarbVersion : contractInfo.compilerVersion}
             onValueChange={(version) => {
-              if (version === '') return;
+              if (version === "") return;
               setContractInfo((prevValue) => {
-                if (contractInfo.chain === 'starknet') {
+                if (contractInfo.chain === "starknet") {
                   return {
                     ...prevValue,
                     scarbVersion: version,
@@ -351,7 +358,7 @@ export const ContractInfoForm: FC<ContractInfoProps> = ({ contractInfo, setContr
         </div>
       </div>
 
-      {contractInfo.compilerType === 'solidity' && (
+      {contractInfo.compilerType === "solidity" && (
         <div className="space-y-2">
           <Label htmlFor="building-env" className="block text-sm font-medium ">
             Please Select Optimization Option
@@ -363,7 +370,7 @@ export const ContractInfoForm: FC<ContractInfoProps> = ({ contractInfo, setContr
             onValueChange={(value) =>
               setContractInfo((prev) => ({
                 ...prev,
-                optimize: value === 'Yes' ? '1' : '0',
+                optimize: value === "Yes" ? "1" : "0",
               }))
             }
           >
@@ -381,7 +388,7 @@ export const ContractInfoForm: FC<ContractInfoProps> = ({ contractInfo, setContr
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="flex flex-col gap-6">
-          {contractInfo.compilerType === 'stylus' && (
+          {contractInfo.compilerType === "stylus" && (
             <div className="space-y-2">
               <Label htmlFor="building-env" className="block text-sm font-medium ">
                 Please Select Building Environment
@@ -409,7 +416,7 @@ export const ContractInfoForm: FC<ContractInfoProps> = ({ contractInfo, setContr
               </RadioGroup>
             </div>
           )}
-          <div className="space-y-2">
+          {/* <div className="space-y-2">
             <div className="flex items-center gap-1">
               <Label htmlFor="user-account" className="block text-sm font-medium ">
                 Enter your Ethereum Account to get NFT
@@ -429,9 +436,9 @@ export const ContractInfoForm: FC<ContractInfoProps> = ({ contractInfo, setContr
                 }))
               }
             />
-          </div>
+          </div> */}
         </div>
-        {contractInfo.chain === 'arbitrum' && (
+        {contractInfo.chain === "arbitrum" && (
           <ol className="ml-4 list-disc">
             <li>
               <p className="text-sm">
@@ -443,7 +450,7 @@ export const ContractInfoForm: FC<ContractInfoProps> = ({ contractInfo, setContr
             </li>
             <li>
               <p className="text-sm">
-                If the Arbitrum contract was deployed without the{' '}
+                If the Arbitrum contract was deployed without the{" "}
                 <span className="font-semibold bg-indigo-100 dark:bg-indigo-900 px-1 rounded">--no-verify</span> option,
                 choose <span className="font-semibold bg-indigo-100 dark:bg-indigo-900 px-1 rounded">x86</span> and
                 proceed with verification.
@@ -452,10 +459,10 @@ export const ContractInfoForm: FC<ContractInfoProps> = ({ contractInfo, setContr
             <li>
               <TooltipProvider delayDuration={100}>
                 <p className="text-sm">
-                  If the{' '}
-                  <span className="font-semibold bg-indigo-100 dark:bg-indigo-900 px-1 rounded">--no-verify</span>{' '}
-                  option was used, select either{' '}
-                  <span className="font-semibold bg-indigo-100 dark:bg-indigo-900 px-1 rounded">arm</span> or{' '}
+                  If the{" "}
+                  <span className="font-semibold bg-indigo-100 dark:bg-indigo-900 px-1 rounded">--no-verify</span>{" "}
+                  option was used, select either{" "}
+                  <span className="font-semibold bg-indigo-100 dark:bg-indigo-900 px-1 rounded">arm</span> or{" "}
                   <span className="font-semibold bg-indigo-100 dark:bg-indigo-900 px-1 rounded">x86</span> for
                   verification.
                   <Tooltip>
@@ -494,7 +501,7 @@ export const ContractInfoForm: FC<ContractInfoProps> = ({ contractInfo, setContr
           }
         />
         <Label htmlFor="terms" className="ml-2 text-sm ">
-          I agree to the{' '}
+          I agree to the{" "}
           <a href="#" className="text-blue-600">
             terms of service
           </a>
@@ -514,10 +521,10 @@ type ContinueButtonProps = {
 const ContinueButton = ({ nextStep, contractInfo, setErrorMessage }: ContinueButtonProps) => {
   const checkContinueButtonDisable = (contractInfo: ContractInfo) => {
     const isNotEmpty = (value: string | boolean | undefined | null): value is string =>
-      value !== '' && value !== undefined && value !== null;
+      value !== "" && value !== undefined && value !== null;
 
     for (const [, value] of Object.entries(contractInfo)) {
-      if (typeof value === 'object') continue;
+      if (typeof value === "object") continue;
       if (!isNotEmpty(value)) return true;
     }
 
@@ -528,7 +535,7 @@ const ContinueButton = ({ nextStep, contractInfo, setErrorMessage }: ContinueBut
 
     if (isArbitrumContractInfo(contractInfo)) {
       const { compilerType, os } = contractInfo;
-      if (compilerType === 'stylus' && os === undefined) return true;
+      if (compilerType === "stylus" && os === undefined) return true;
     }
 
     if (isStarknetContractInfo(contractInfo)) {
@@ -548,9 +555,9 @@ const ContinueButton = ({ nextStep, contractInfo, setErrorMessage }: ContinueBut
       isStarknetContractInfo(contractInfo) && !isStarknetAddressOrHash(contractInfo.declareTxHash);
 
     if (isInvalidEthOrStarknetAddress || isInvalidStarknetDeclareTxHash) {
-      if (isInvalidEthOrStarknetAddress) setErrorMessage((prev) => ({ ...prev, contractAddress: 'Invalid Address' }));
+      if (isInvalidEthOrStarknetAddress) setErrorMessage((prev) => ({ ...prev, contractAddress: "Invalid Address" }));
       if (isInvalidStarknetDeclareTxHash)
-        setErrorMessage((prev) => ({ ...prev, declareTxHash: 'Invalid Transaction Hash' }));
+        setErrorMessage((prev) => ({ ...prev, declareTxHash: "Invalid Transaction Hash" }));
 
       return;
     }
