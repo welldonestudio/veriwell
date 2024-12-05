@@ -1,7 +1,7 @@
-import { ThemeToggle } from '@/src/widgets/ThemeToggle';
-import { Logo } from '@/src/widgets/Logo';
-import { Button, Separator } from '@/src/shared/ui';
-import Link from 'next/link';
+import { ThemeToggle } from "@/src/widgets/ThemeToggle";
+import { Logo } from "@/src/widgets/Logo";
+import { Button, Separator } from "@/src/shared/ui";
+import Link from "next/link";
 
 type Props = {};
 export function Header(props: Props) {
@@ -16,15 +16,6 @@ export function Header(props: Props) {
             className="rounded-full border-2 border-black dark:border-white font-extrabold"
           >
             Verify
-          </Button>
-        </Link>
-        <Link href="/nft" className="font-bold">
-          <Button
-            variant="outline"
-            size="sm"
-            className="rounded-full border-2 border-black dark:border-white font-extrabold"
-          >
-            Nfts
           </Button>
         </Link>
       </div>
