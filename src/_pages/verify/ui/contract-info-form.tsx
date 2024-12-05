@@ -489,7 +489,7 @@ export const ContractInfoForm: FC<ContractInfoProps> = ({ contractInfo, setContr
         )}
       </div>
 
-      <div className="flex items-center">
+      {/* <div className="flex items-center">
         <Checkbox
           id="terms"
           checked={contractInfo.agreeTerm}
@@ -506,7 +506,7 @@ export const ContractInfoForm: FC<ContractInfoProps> = ({ contractInfo, setContr
             terms of service
           </a>
         </Label>
-      </div>
+      </div> */}
 
       <ContinueButton nextStep={nextStep} contractInfo={contractInfo} setErrorMessage={setErrorMessage} />
     </form>
