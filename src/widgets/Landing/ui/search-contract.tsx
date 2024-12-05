@@ -12,7 +12,7 @@ import { Input } from "@/src/shared/ui";
 import { getBytecode, createConfig } from "@wagmi/core";
 import { SearchIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
-import React, { ChangeEvent, useMemo, useRef } from "react";
+import React, { ChangeEvent, useEffect, useMemo, useRef } from "react";
 import { http, WagmiProvider, createConfig as createConfigGeneral } from "wagmi";
 import { arbitrum, arbitrumSepolia, mainnet, sepolia } from "viem/chains";
 import _ from "lodash";
@@ -230,6 +230,21 @@ export function SearchContract({ contractAddress }: SearchContractProps) {
       inputRef.current?.focus(); // Popover가 열린 직후에 Input으로 포커스를 다시 설정
     }, 0);
   };
+
+  useEffect(() => {
+    if (!contractAddress) return;
+    else {
+      if (
+        (contractAddress.length !== 42 && contractAddress.length !== 66) ||
+        (contractAddress.length === 66 && !isStarknetAddressOrHash(contractAddress)) ||
+        (contractAddress.length === 42 && !isEthAddress(contractAddress))
+      )
+        return;
+
+      setIsOpen(true);
+      debouncedSearch(contractAddress);
+    }
+  }, []);
 
   return (
     <Popover open={isOpen} onOpenChange={setIsOpen}>
