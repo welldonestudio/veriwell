@@ -41,10 +41,13 @@ export const config = createConfig({
   },
 });
 
-export function SearchContractWrapper() {
+interface SearchContractProps {
+  contractAddress?: string;
+}
+export function SearchContractWrapper({ contractAddress }: SearchContractProps) {
   return (
     <WagmiProvider config={configGeneral}>
-      <SearchContract />
+      <SearchContract contractAddress={contractAddress} />
     </WagmiProvider>
   );
 }
@@ -148,7 +151,10 @@ const getSuggestionsList = async (address: string) => {
   }
 };
 
-export function SearchContract() {
+interface SearchContractProps {
+  contractAddress?: string;
+}
+export function SearchContract({ contractAddress }: SearchContractProps) {
   const router = useRouter();
   const inputRef = useRef<HTMLInputElement>(null); // Input을 참조하기 위한 ref
   const commandRef = useRef<HTMLDivElement>(null); // PopoverContent를 참조하기 위한 ref
@@ -179,7 +185,8 @@ export function SearchContract() {
 
   const handleChange = async (event: ChangeEvent<HTMLInputElement>) => {
     setIsOpen(true);
-    const address = event.currentTarget.value;
+    let address = event.currentTarget.value;
+
     if (
       (address.length !== 42 && address.length !== 66) ||
       (address.length === 66 && !isStarknetAddressOrHash(address)) ||
@@ -230,6 +237,7 @@ export function SearchContract() {
         <div onClick={handleOpenPopover}>
           <SearchIcon className="absolute left-3 top-[50%] translate-y-[-50%] h-5 w-5" />
           <Input
+            defaultValue={contractAddress?.replace(/[^a-zA-Z0-9]/g, "")}
             ref={inputRef}
             type="text"
             placeholder="Search by Contract Address"
