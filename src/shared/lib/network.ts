@@ -1,4 +1,4 @@
-import { isValidHexAddress, type Hex } from '@metamask/utils';
+import { isValidHexAddress, type Hex } from "@metamask/utils";
 
 /**
  * Checks if an address is an ethereum one.
@@ -17,8 +17,8 @@ export const isEthAddress = (address: string): boolean => isValidHexAddress(addr
 export const isStarknetAddressOrHash = (address: string): boolean => {
   // Starknet addresses are 64 characters long.
   const starknetAddressRegex = /^0x[a-fA-F0-9]{64}$/;
-  // Starknet hashes are 62 characters long.
-  const starknetHashRegex = /^0x[a-fA-F0-9]{62}$/;
+  // Starknet hashes are 62 ~ 64 characters long.
+  const starknetHashRegex = /^0x[a-fA-F0-9]{62,64}$/;
 
   return starknetAddressRegex.test(address) || starknetHashRegex.test(address);
 };
