@@ -2,15 +2,15 @@ import {
   getSolidityVerificationResult,
   getStylusVerificationResult,
   getCairoVerificationResult,
-} from '@/src/features/verify/api';
-import { VerifyStepper } from './verify-stepper';
-import { VerifiedInfo } from './verified-info';
-import { Suspense } from 'react';
-import { LoadingSpinner } from '@/components/ui/loading-spinner';
+} from "@/src/features/verify/api";
+import { VerifyStepper } from "./verify-stepper";
+import { VerifiedInfo } from "./verified-info";
+import { Suspense } from "react";
+import { LoadingSpinner } from "@/components/ui/loading-spinner";
 
-export type SupportedChain = 'ethereum' | 'arbitrum' | 'starknet';
-export type SupportedNetwork = 'mainnet' | 'sepolia' | 'goerli' | 'one';
-export type SupportedCompilerType = 'solidity' | 'stylus' | 'cairo';
+export type SupportedChain = "ethereum" | "arbitrum" | "starknet";
+export type SupportedNetwork = "mainnet" | "sepolia" | "goerli" | "one";
+export type SupportedCompilerType = "solidity" | "stylus" | "cairo";
 
 type BaseContractType = {
   chain: SupportedChain;
@@ -24,39 +24,39 @@ type BaseContractType = {
 };
 
 export type EthereumContractInfo = BaseContractType & {
-  chain: Extract<SupportedChain, 'ethereum'>;
-  network: Exclude<SupportedNetwork, 'one'>;
-  compilerType: Extract<SupportedCompilerType, 'solidity'>;
-  optimize: '0' | '1';
-  optimizeRuns?: string | '200';
-  evmVersion?: string | 'default';
+  chain: Extract<SupportedChain, "ethereum">;
+  network: Exclude<SupportedNetwork, "one">;
+  compilerType: Extract<SupportedCompilerType, "solidity">;
+  optimize: "0" | "1";
+  optimizeRuns?: string | "200";
+  evmVersion?: string | "default";
 };
 export const isEthereumContractInfo = (value: any): value is EthereumContractInfo =>
-  (value as EthereumContractInfo)?.chain === 'ethereum';
+  (value as EthereumContractInfo)?.chain === "ethereum";
 
 export type ArbitrumContractInfo = BaseContractType & {
-  chain: Extract<SupportedChain, 'arbitrum'>;
-  network: Exclude<SupportedNetwork, 'mainnet' | 'goerli'>;
-  compilerType: Extract<SupportedCompilerType, 'stylus'>;
-  os: 'x86' | 'arm';
+  chain: Extract<SupportedChain, "arbitrum">;
+  network: Exclude<SupportedNetwork, "mainnet" | "goerli">;
+  compilerType: Extract<SupportedCompilerType, "stylus">;
+  os: "x86" | "arm";
 };
 export const isArbitrumContractInfo = (value: any): value is ArbitrumContractInfo =>
-  (value as ArbitrumContractInfo)?.chain === 'arbitrum';
+  (value as ArbitrumContractInfo)?.chain === "arbitrum";
 
 export type StarknetContractInfo = BaseContractType & {
-  chain: Extract<SupportedChain, 'starknet'>;
-  network: Exclude<SupportedNetwork, 'goerli' | 'one'>;
-  compilerType: Extract<SupportedCompilerType, 'cairo'>;
+  chain: Extract<SupportedChain, "starknet">;
+  network: Exclude<SupportedNetwork, "goerli" | "one">;
+  compilerType: Extract<SupportedCompilerType, "cairo">;
   declareTxHash: string;
   scarbVersion: string;
 };
 export const isStarknetContractInfo = (value: any): value is StarknetContractInfo =>
-  (value as StarknetContractInfo)?.chain === 'starknet';
+  (value as StarknetContractInfo)?.chain === "starknet";
 
 export type ContractInfo = EthereumContractInfo | ArbitrumContractInfo | StarknetContractInfo;
 
-type OsType = 'x86' | 'arm';
-export const isOsType = (value: string): value is OsType => value === 'x86' || value === 'arm';
+type OsType = "x86" | "arm";
+export const isOsType = (value: string): value is OsType => value === "x86" || value === "arm";
 
 export const VerifiyPage = async ({ searchParams }: { searchParams?: { [key: string]: string | undefined } }) => {
   const chain = searchParams?.chain as SupportedChain;
@@ -70,27 +70,27 @@ export const VerifiyPage = async ({ searchParams }: { searchParams?: { [key: str
   let result = null;
 
   if (contractAddress) {
-    if (chain === 'ethereum' && network !== undefined) {
+    if (chain === "ethereum" && network !== undefined) {
       result = await getSolidityVerificationResult(
-        'ethereum',
-        network.toLowerCase() === 'mainnet' ? '0x1' : '0xaa36a7',
-        contractAddress,
+        "ethereum",
+        network.toLowerCase() === "mainnet" ? "0x1" : "0xaa36a7",
+        contractAddress
       );
     }
-    if (chain === 'arbitrum' && network !== undefined) {
+    if (chain === "arbitrum" && network !== undefined) {
       result = await getStylusVerificationResult(
-        network.toLowerCase() === 'one' ? 'ARBITRUM_ONE' : 'ARBITRUM_SEPOLIA',
-        contractAddress,
+        network.toLowerCase() === "one" ? "ARBITRUM_ONE" : "ARBITRUM_SEPOLIA",
+        contractAddress
       );
       // 리믹스에 소스코드가 업로드 되었을 때
       if (result?.isRemixSrcUploaded) {
         initialStep = 1;
       }
     }
-    if (chain === 'starknet' && network !== undefined) {
+    if (chain === "starknet" && network !== undefined) {
       result = await getCairoVerificationResult(
-        network.toLowerCase() === 'mainnet' ? '0x534e5f4d41494e' : '0x534e5f5345504f4c4941',
-        contractAddress,
+        network.toLowerCase() === "mainnet" ? "0x534e5f4d41494e" : "0x534e5f5345504f4c4941",
+        contractAddress
       );
     }
 
@@ -104,7 +104,7 @@ export const VerifiyPage = async ({ searchParams }: { searchParams?: { [key: str
   }
 
   return (
-    <div className="max-w-4xl w-full p-6 rounded-lg border-black dark:border-white border-[3px]">
+    <div className="max-w-4xl w-full m-6 p-6 rounded-lg border-black dark:border-white border-[3px]">
       <h1 className="text-2xl font-bold text-center mb-2">Verify & Publish Contract Source Code</h1>
       <p className="text-center  mb-6">
         Source code verification provides transparency for users interacting with smart contracts.

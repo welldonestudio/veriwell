@@ -1,6 +1,10 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
+import SyntaxHighlighter from "react-syntax-highlighter";
+import { a11yDark, a11yLight } from "react-syntax-highlighter/dist/esm/styles/hljs";
+import { useTheme } from "next-themes";
+
 import {
   Dialog,
   DialogContent,
@@ -8,14 +12,12 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@/components/ui/dialog';
-import { Button } from '@/src/shared/ui';
-import { ScrollArea } from '@/components/ui/scroll-area';
-import SyntaxHighlighter from 'react-syntax-highlighter';
-import { a11yDark, a11yLight } from 'react-syntax-highlighter/dist/esm/styles/hljs';
-import { MarkdownPreview } from './mark-down-preview';
-import { useTheme } from 'next-themes';
-import { Loader } from '@/src/widgets/Loader';
+} from "@/components/ui/dialog";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { Button } from "@/src/shared/ui";
+import { Loader } from "@/src/widgets/Loader";
+
+import { MarkdownPreview } from "./mark-down-preview";
 
 interface FunctionExplainModalProps {
   code?: string;
@@ -24,15 +26,15 @@ interface FunctionExplainModalProps {
 export default function FunctionExplainModal({ code }: FunctionExplainModalProps) {
   const { resolvedTheme } = useTheme();
   const [isOpen, setIsOpen] = useState(false);
-  const [explanation, setExplanation] = useState('');
+  const [explanation, setExplanation] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
   const getExplanationByApi = async (code: string) => {
     setIsLoading(true);
-    const result = await fetch('api/chat', {
-      method: 'POST',
+    const result = await fetch("api/chat", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({ content: code }),
     });
@@ -69,9 +71,9 @@ export default function FunctionExplainModal({ code }: FunctionExplainModalProps
                   language="solidity"
                   wrapLongLines
                   className="text-sm"
-                  style={resolvedTheme === 'dark' ? a11yDark : a11yLight}
+                  style={resolvedTheme === "dark" ? a11yDark : a11yLight}
                 >
-                  {code || ''}
+                  {code || ""}
                 </SyntaxHighlighter>
               </div>
             </pre>
@@ -82,7 +84,26 @@ export default function FunctionExplainModal({ code }: FunctionExplainModalProps
             </div>
           ) : (
             <div>
-              <h3 className="text-lg font-semibold mb-2">Explanation</h3>
+              <TooltipProvider delayDuration={100}>
+                <h3 className="text-lg font-semibold mb-2">
+                  Explanation
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <span className="inline-flex items-center text-[#E9D502] ml-2 text-[0.9em] cursor-pointer">
+                        &#9888;
+                      </span>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p className="text-xs">
+                        please note that AI code assistance is a reference tool <br />
+                        and may not always provide complete or accurate explanations.
+                        <br />
+                        It is continuously improving but should not be fully relied upon.
+                      </p>
+                    </TooltipContent>
+                  </Tooltip>
+                </h3>
+              </TooltipProvider>
               <div className="rounded border p-4 max-h-[calc(50vh-92px)] overflow-y-scroll">
                 <MarkdownPreview markdown={explanation + explanation} />
               </div>

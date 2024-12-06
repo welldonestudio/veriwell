@@ -18,7 +18,7 @@ export function Header(props: Props) {
             Verify
           </Button>
         </Link>
-        <Link href="https://docs.welldonestudio.io/" className="font-bold">
+        <Link href="https://docs.welldonestudio.io/veriwell" className="font-bold">
           <Button
             variant="outline"
             size="sm"
