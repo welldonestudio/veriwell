@@ -8,9 +8,6 @@ export default function HomeWrapper({ searchParams }: { searchParams?: { [key: s
   const contractAddress = searchParams?.address;
   const isMobile = useMediaQuery("(max-width: 768px)");
 
-  console.log("searchParams", searchParams);
-  console.log("contractAddress", contractAddress);
-
   return (
     <div className="h-full flex flex-col items-center justify-center flex-1 px-4 text-center">
       {isMobile ? (

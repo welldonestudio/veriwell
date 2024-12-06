@@ -1,3 +1,4 @@
+import { StarknetChainId } from "@/src/features/verify/api";
 import { isValidHexAddress, type Hex } from "@metamask/utils";
 
 /**
@@ -22,3 +23,18 @@ export const isStarknetAddressOrHash = (address: string): boolean => {
 
   return starknetAddressRegex.test(address) || starknetHashRegex.test(address);
 };
+
+type ChainId = StarknetChainId;
+export const getChainAndNetworkByChainId = (chainId: ChainId): { chain: string; network: string } => {
+  switch (chainId) {
+    case "0x534e5f4d41494e":
+      return { chain: "starknet", network: "mainnet" };
+    case "0x534e5f5345504f4c4941":
+      return { chain: "starknet", network: "sepolia" };
+    default:
+      return { chain: "Unknown", network: "Unknown" };
+  }
+};
+
+export const shortenAddress = (address: string, length = 6): string =>
+  `${address.slice(0, length)}...${address.slice(-length)}`;

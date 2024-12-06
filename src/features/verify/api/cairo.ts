@@ -1,6 +1,6 @@
-import { baseUrl } from '.';
+import { baseUrl, arbitrumX86BaseUrl } from ".";
 
-type StarknetChainId = '0x534e5f4d41494e' | '0x534e5f5345504f4c4941';
+export type StarknetChainId = "0x534e5f4d41494e" | "0x534e5f5345504f4c4941";
 export interface CairoVerificationSrcUploadReqDto {
   chainId: StarknetChainId;
   contractAddress: string;
@@ -13,15 +13,15 @@ export interface CairoVerificationSrcUploadResultDto {
 }
 
 export const postCairoSourceCode = async (
-  request: CairoVerificationSrcUploadReqDto,
+  request: CairoVerificationSrcUploadReqDto
 ): Promise<CairoVerificationSrcUploadResultDto> => {
   const formData = new FormData();
-  formData.append('chainId', request.chainId);
-  formData.append('contractAddress', request.contractAddress);
-  formData.append('srcZipFile', request.srcZipFile);
+  formData.append("chainId", request.chainId);
+  formData.append("contractAddress", request.contractAddress);
+  formData.append("srcZipFile", request.srcZipFile);
   try {
     const response = await fetch(`${baseUrl}/starknet/verifications/sources`, {
-      method: 'POST',
+      method: "POST",
       body: formData,
     });
     if (!response.ok) {
@@ -29,7 +29,7 @@ export const postCairoSourceCode = async (
     }
     return await response.json();
   } catch (error) {
-    throw new Error('Failed to upload source code');
+    throw new Error("Failed to upload source code");
   }
 };
 
@@ -52,9 +52,9 @@ export interface CairoVerificationResultDto {
 export const verifyCairo = async (request: CairoVerificationReqDto): Promise<CairoVerificationResultDto> => {
   try {
     const response = await fetch(`${baseUrl}/starknet/verifications`, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify(request),
     });
@@ -63,24 +63,24 @@ export const verifyCairo = async (request: CairoVerificationReqDto): Promise<Cai
     }
     return await response.json();
   } catch (error) {
-    throw new Error('Failed to verify contract');
+    throw new Error("Failed to verify contract");
   }
 };
 
 export const getCairoVerificationResult = async (
   chainId: StarknetChainId,
-  contractAddress: string,
+  contractAddress: string
 ): Promise<CairoVerificationResultDto> => {
   try {
     const response = await fetch(
-      `${baseUrl}/starknet/verifications?chainId=${chainId}&contractAddress=${contractAddress}`,
-      { headers: { 'Cache-Control': 'no-cache' } },
+      `${arbitrumX86BaseUrl}/starknet/verifications?chainId=${chainId}&contractAddress=${contractAddress}`,
+      { headers: { "Cache-Control": "no-cache" } }
     );
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
     return await response.json();
   } catch (error) {
-    throw new Error('Failed to get verification result');
+    throw new Error("Failed to get verification result");
   }
 };
