@@ -9,7 +9,7 @@ export default function HomeWrapper({ searchParams }: { searchParams?: { [key: s
   const isMobile = useMediaQuery("(max-width: 768px)");
 
   return (
-    <div className="h-full flex flex-col items-center justify-center flex-1 px-4 text-center">
+    <div className="h-full flex flex-col items-center justify-center flex-1 p-4 text-center">
       {isMobile ? (
         <div className="font-bold text-lg">
           Due to the nature of the content, <br />
