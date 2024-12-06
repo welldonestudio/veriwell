@@ -234,17 +234,12 @@ export function SearchContract({ contractAddress }: SearchContractProps) {
   useEffect(() => {
     if (!contractAddress) return;
     else {
-      if (
-        (contractAddress.length !== 42 && contractAddress.length !== 66) ||
-        (contractAddress.length === 66 && !isStarknetAddressOrHash(contractAddress)) ||
-        (contractAddress.length === 42 && !isEthAddress(contractAddress))
-      )
-        return;
+      if (!isEthAddress(contractAddress) || !isStarknetAddressOrHash(contractAddress)) return;
 
       setIsOpen(true);
       debouncedSearch(contractAddress);
     }
-  }, []);
+  }, [contractAddress]);
 
   return (
     <Popover open={isOpen} onOpenChange={setIsOpen}>
