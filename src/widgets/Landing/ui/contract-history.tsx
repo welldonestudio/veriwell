@@ -54,6 +54,9 @@ export const ContractHistory = () => {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       const result = await response.json();
+      if (Array.isArray(result)) {
+        result.sort((a, b) => b.verifiedTimestamp - a.verifiedTimestamp);
+      }
       setHistory(result);
     } catch (error) {
       throw new Error("Failed to get contract history");
@@ -103,7 +106,9 @@ export const ContractHistory = () => {
                 <TableCell className="capitalize">{network}</TableCell>
                 <TableCell className="underline">{shortenAddress(item.contractAddress, 12)}</TableCell>
                 <TableCell>{item.scarbVersion}</TableCell>
-                <TableCell className="text-right">{item.verifiedTimestamp}</TableCell>
+                <TableCell className="text-right">
+                  {new Date(Number(item.verifiedTimestamp)).toISOString().split("T")[0]}
+                </TableCell>
               </TableRow>
             );
           })}
