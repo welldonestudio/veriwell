@@ -89,7 +89,6 @@ export const ContractHistory = () => {
             <TableHead className="w-[100px]">Network</TableHead>
             <TableHead>Contract Address</TableHead>
             <TableHead>Scrab Version</TableHead>
-            <TableHead className="text-right">Verified at</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -106,9 +105,6 @@ export const ContractHistory = () => {
                 <TableCell className="capitalize">{network}</TableCell>
                 <TableCell className="underline">{shortenAddress(item.contractAddress, 12)}</TableCell>
                 <TableCell>{item.scarbVersion}</TableCell>
-                <TableCell className="text-right">
-                  {new Date(Number(item.verifiedTimestamp)).toISOString().split("T")[0]}
-                </TableCell>
               </TableRow>
             );
           })}
